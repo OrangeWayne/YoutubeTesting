@@ -34,7 +34,7 @@ import static org.junit.Assert.*;
 public class PerformanceTest extends UiAutomatorTestCase   {
     private static final String BASIC_SAMPLE_PACKAGE
             = "com.google.android.youtube";
-    private static final int LAUNCH_TIMEOUT = 5000;
+    private static final int LAUNCH_TIMEOUT = 10000;
     private UiDevice mDevice;
 
     @Before
@@ -71,10 +71,10 @@ public class PerformanceTest extends UiAutomatorTestCase   {
         context.startActivity(intent);
 
         // Wait for the app to appear
-//        mDevice.wait(Until.hasObject(By.pkg(BASIC_SAMPLE_PACKAGE).depth(0)),
-//                LAUNCH_TIMEOUT);
-        mDevice.wait(Until.hasObject(By.res("android.widget.LinearLayout")), LAUNCH_TIMEOUT);
-        sleep(1000);
+        mDevice.wait(Until.hasObject(By.pkg(BASIC_SAMPLE_PACKAGE).depth(0)),
+                LAUNCH_TIMEOUT);
+//        mDevice.wait(Until.hasObject(By.res("android.widget.LinearLayout")), LAUNCH_TIMEOUT);
+//        sleep(1000);
     }
 
     @Test
