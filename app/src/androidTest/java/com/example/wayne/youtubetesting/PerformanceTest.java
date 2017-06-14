@@ -6,6 +6,7 @@ import org.junit.Before;
 import android.content.Intent;
 import android.os.RemoteException;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.test.uiautomator.BySelector;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.UiObject;
@@ -17,6 +18,8 @@ import android.support.test.uiautomator.UiAutomatorTestCase;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+
+import junit.framework.Assert;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +34,7 @@ import static org.junit.Assert.*;
 public class PerformanceTest extends UiAutomatorTestCase   {
     private static final String BASIC_SAMPLE_PACKAGE
             = "com.google.android.youtube";
-    private static final int LAUNCH_TIMEOUT = 3000;
+    private static final int LAUNCH_TIMEOUT = 5000;
     private UiDevice mDevice;
 
     @Before
@@ -68,19 +71,29 @@ public class PerformanceTest extends UiAutomatorTestCase   {
         context.startActivity(intent);
 
         // Wait for the app to appear
-        mDevice.wait(Until.hasObject(By.pkg(BASIC_SAMPLE_PACKAGE).depth(0)),
-                LAUNCH_TIMEOUT);
+//        mDevice.wait(Until.hasObject(By.pkg(BASIC_SAMPLE_PACKAGE).depth(0)),
+//                LAUNCH_TIMEOUT);
+        mDevice.wait(Until.hasObject(By.res("android.widget.LinearLayout")), LAUNCH_TIMEOUT);
+        sleep(1000);
     }
 
     @Test
     public void testVideoPlayTime(){
         UiObject firstVideo = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/thumbnail_layout"));
+        UiObject videoFrame = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/player_fragment_container"));
+        UiObject stopButton = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/fast_forward_rewind_triangles"));
+        UiObject currentTime = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/time_bar_current_time"));
+
         try {
             firstVideo.click();
-            sleep(100);
-            assert true;
+            sleep(10000);
+            videoFrame.click();
+            stopButton.click();
+            String[] time = currentTime.getText().split(":");
+            int second = Integer.valueOf(time[1]);
+            Assert.assertTrue("PlayTime OK",second > 8 && second < 12);
         } catch (UiObjectNotFoundException e) {
-            assert false;
+            fail("UiObject Not Found");
         }
 
     }
