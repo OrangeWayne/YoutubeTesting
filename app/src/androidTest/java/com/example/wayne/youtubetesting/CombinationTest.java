@@ -39,7 +39,7 @@ public class CombinationTest extends UiAutomatorTestCase   {
     private UiDevice mDevice;
 
     @Before
-    public void startYoutubeMainActivityFromHomeScreen() {
+    public void startYoutubeMainActivityFromHomeScreen() throws UiObjectNotFoundException {
         // Initialize UiDevice instance
         mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
 
@@ -76,10 +76,6 @@ public class CombinationTest extends UiAutomatorTestCase   {
                 LAUNCH_TIMEOUT);
 //        mDevice.wait(Until.hasObject(By.res("android.widget.LinearLayout")), LAUNCH_TIMEOUT);
 //        sleep(1000);
-    }
-    
-    @Test
-    public void testSettingLogin() throws UiObjectNotFoundException {
         UiObject toolbar = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/toolbar"));
         UiObject toolbarItem = toolbar.getChild(new UiSelector().index(1));
         UiObject moreOption = toolbarItem.getChild((new UiSelector().index(1)));
@@ -97,17 +93,37 @@ public class CombinationTest extends UiAutomatorTestCase   {
         UiObject loginAccount = loginListViewItemChild.getChild(new UiSelector().index(0));
         loginAccount.click();
     }
-
+/*
     @Test
-    public void testSwitchTab() throws UiObjectNotFoundException {
+    public void test_0_SettingLogin() throws UiObjectNotFoundException {
+        UiObject toolbar = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/toolbar"));
+        UiObject toolbarItem = toolbar.getChild(new UiSelector().index(1));
+        UiObject moreOption = toolbarItem.getChild((new UiSelector().index(1)));
+        moreOption.click();
+
+        UiObject listView = new UiObject(new UiSelector().className("android.widget.ListView"));
+        UiObject listViewItem = listView.getChild(new UiSelector().index(4));
+        UiObject listViewItemChild = listViewItem.getChild(new UiSelector().index(0));
+        UiObject login = listViewItemChild.getChild(new UiSelector().index(0));
+        login.click();
+
+        UiObject loginListView = new UiObject(new UiSelector().className("android.widget.ListView"));
+        UiObject loginListViewItem = loginListView.getChild(new UiSelector().index(1));
+        UiObject loginListViewItemChild = loginListViewItem.getChild(new UiSelector().index(0));
+        UiObject loginAccount = loginListViewItemChild.getChild(new UiSelector().index(0));
+        loginAccount.click();
+    }
+*/
+    @Test
+    public void SwitchTab() throws UiObjectNotFoundException {
         UiObject tabBar = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/tabs_bar"));
         UiObject tabBarLayout = tabBar.getChild(new UiSelector().index(0));
         UiObject hotVideo = tabBarLayout.getChild(new UiSelector().index(1));
         hotVideo.click();
     }
 
-    @Test
-    public void testSettingLogout() throws UiObjectNotFoundException {
+    @After
+    public void Logout() throws UiObjectNotFoundException {
         UiObject toolbar = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/toolbar"));
         UiObject toolbarItem = toolbar.getChild(new UiSelector().index(1));
         UiObject moreOption = toolbarItem.getChild((new UiSelector().index(1)));
