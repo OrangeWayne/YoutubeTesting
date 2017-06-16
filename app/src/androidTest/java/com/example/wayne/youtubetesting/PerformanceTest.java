@@ -45,7 +45,7 @@ public class PerformanceTest extends UiAutomatorTestCase   {
 
         // Start from the home screen
         mDevice.pressHome();
-        
+
         try {
             if(mDevice.pressRecentApps()) {
                 sleep(1000);

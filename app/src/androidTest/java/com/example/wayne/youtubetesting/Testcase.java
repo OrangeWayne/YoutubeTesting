@@ -1,5 +1,6 @@
 package com.example.wayne.youtubetesting;
 
+import org.junit.After;
 import org.junit.Before;
 
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 import android.util.Log;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -39,15 +41,28 @@ public class Testcase {
     private static final int LAUNCH_TIMEOUT = 3000;
     private UiDevice mDevice;
 
-    @Before
-    public void startYoutubeMainActivityFromHomeScreen() throws InterruptedException {
+    @Test
+    public void Step1_qwe() throws UiObjectNotFoundException, InterruptedException {
+        LaunchApp();
+        Login();
+        Log.d("YoutubeTest", "test1");
+    }
+
+    @Test
+    public void Step2_abc() throws UiObjectNotFoundException, InterruptedException, RemoteException {
+        Log.d("YoutubeTest", "test2");
+        Logout();
+    }
+
+    @Ignore
+    public void LaunchApp() throws UiObjectNotFoundException, InterruptedException {
+
+        Log.d("YoutubeTest", "LaunchApp");
         // Initialize UiDevice instance
         mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-
         // Start from the home screen
         mDevice.pressHome();
 
-        // close youtube app
         try {
             if(mDevice.pressRecentApps()) {
                 Thread.sleep(1000);
@@ -79,13 +94,43 @@ public class Testcase {
                 LAUNCH_TIMEOUT);
     }
 
-    @Test
-    public void step1_qwe() throws UiObjectNotFoundException {
-        Log.d("Test","test1");
+    @Ignore
+    public void Login() throws UiObjectNotFoundException {
+        Log.d("YoutubeTest","Login");
+        UiObject toolbar = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/toolbar"));
+        UiObject toolbarItem = toolbar.getChild(new UiSelector().index(1));
+        UiObject moreOption = toolbarItem.getChild((new UiSelector().index(1)));
+        moreOption.click();
+
+        UiObject listView = new UiObject(new UiSelector().className("android.widget.ListView"));
+        UiObject listViewItem = listView.getChild(new UiSelector().index(4));
+        UiObject listViewItemChild = listViewItem.getChild(new UiSelector().index(0));
+        UiObject login = listViewItemChild.getChild(new UiSelector().index(0));
+        login.click();
+
+        UiObject loginListView = new UiObject(new UiSelector().className("android.widget.ListView"));
+        UiObject loginListViewItem = loginListView.getChild(new UiSelector().index(1));
+        UiObject loginListViewItemChild = loginListViewItem.getChild(new UiSelector().index(0));
+        UiObject loginAccount = loginListViewItemChild.getChild(new UiSelector().index(0));
+        loginAccount.click();
     }
 
-    @Test
-    public void step2_abc() throws UiObjectNotFoundException {
-        Log.d("Test","test2");
+    @Ignore
+    public void Logout() throws UiObjectNotFoundException, InterruptedException {
+        Log.d("YoutubeTest","Logout");
+        // initialize component
+        UiObject toolbar = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/toolbar"));
+        UiObject toolbarItem = toolbar.getChild(new UiSelector().index(1));
+        UiObject moreOption = toolbarItem.getChild((new UiSelector().index(1)));
+
+        Thread.sleep(1000);
+        moreOption.click();
+
+        UiObject listView = new UiObject(new UiSelector().className("android.widget.ListView"));
+        UiObject listViewItem = listView.getChild(new UiSelector().index(4));
+        UiObject listViewItemChild = listViewItem.getChild(new UiSelector().index(0));
+        UiObject logout = listViewItemChild.getChild(new UiSelector().index(0));
+        logout.click();
     }
+
 }
