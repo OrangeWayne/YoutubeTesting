@@ -1,11 +1,12 @@
 apply plugin: 'com.android.application'
+//apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 25
     buildToolsVersion "26.0.0"
     defaultConfig {
-        applicationId "com.example.wayne.youtubetesting"
-        minSdkVersion 25
+        //applicationId "com.example.wayne.youtubetesting"
+        minSdkVersion 18
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -27,4 +28,18 @@ dependencies {
     androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.1'
     compile 'com.android.support:appcompat-v7:25.3.1'
     testCompile 'junit:junit:4.12'
+}
+
+// 移除舊的 jar 檔
+task deleteOldJar(type: Delete) {
+    delete 'release/YoutubeTesting.jar'
+}
+
+// 匯出 jar 檔
+task exportJar(type: Copy) {
+    from('build/intermediates/bundles/debug/')
+    into('release/')
+    include('classes.jar')
+    // 將匯出的 jar 檔重新命名
+    rename('classes.jar', 'YoutubeTesting.jar')
 }
