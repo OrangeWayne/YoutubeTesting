@@ -3,24 +3,35 @@ package com.example.wayne.youtubetesting;
 import org.junit.Before;
 
 import android.content.Intent;
+import android.os.RemoteException;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.By;
+import android.support.test.uiautomator.UiObject;
+import android.support.test.uiautomator.UiObjectNotFoundException;
+import android.support.test.uiautomator.UiSelector;
 import android.support.test.uiautomator.Until;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static java.lang.Thread.sleep;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.*;
+import org.junit.runners.MethodSorters;
+
+import org.junit.FixMethodOrder;
+
 /**
  * Created by wayne on 2017/6/13.
  */
 @RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class Testcase {
 
     private static final String BASIC_SAMPLE_PACKAGE
@@ -29,12 +40,25 @@ public class Testcase {
     private UiDevice mDevice;
 
     @Before
-    public void startYoutubeMainActivityFromHomeScreen() {
+    public void startYoutubeMainActivityFromHomeScreen() throws InterruptedException {
         // Initialize UiDevice instance
         mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
 
         // Start from the home screen
         mDevice.pressHome();
+
+        // close youtube app
+        try {
+            if(mDevice.pressRecentApps()) {
+                Thread.sleep(1000);
+                UiObject dismissButton = new UiObject(new UiSelector().descriptionContains("Dismiss YouTube."));
+                dismissButton.click();
+            }
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
 
         // Wait for launcher
         final String launcherPackage = mDevice.getLauncherPackageName();
@@ -56,7 +80,12 @@ public class Testcase {
     }
 
     @Test
-    public void test1(){
+    public void step1_qwe() throws UiObjectNotFoundException {
+        Log.d("Test","test1");
+    }
 
+    @Test
+    public void step2_abc() throws UiObjectNotFoundException {
+        Log.d("Test","test2");
     }
 }
