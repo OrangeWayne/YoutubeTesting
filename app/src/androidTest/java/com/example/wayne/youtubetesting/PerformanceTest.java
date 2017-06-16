@@ -34,7 +34,7 @@ import static org.junit.Assert.*;
 public class PerformanceTest extends UiAutomatorTestCase   {
     private static final String BASIC_SAMPLE_PACKAGE
             = "com.google.android.youtube";
-    private static final int LAUNCH_TIMEOUT = 10000;
+    private static final int LAUNCH_TIMEOUT = 20000;
     private UiDevice mDevice;
 
     @Before
