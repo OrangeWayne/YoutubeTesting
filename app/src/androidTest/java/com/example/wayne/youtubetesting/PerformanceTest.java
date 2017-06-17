@@ -80,12 +80,10 @@ public class PerformanceTest extends UiAutomatorTestCase   {
         // Wait for the app to appear
         mDevice.wait(Until.hasObject(By.pkg(BASIC_SAMPLE_PACKAGE).depth(6)),
                 LAUNCH_TIMEOUT);
-//        mDevice.wait(Until.hasObject(By.res("android.widget.LinearLayout")), LAUNCH_TIMEOUT);
-//        sleep(1000);
     }
 
     @Test
-    public void testVideoPlayTime(){
+    public void testVideoPlayTime1(){
         UiObject firstVideo = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/thumbnail_layout"));
         UiObject videoFrame = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/player_fragment_container"));
         UiObject stopButton = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/fast_forward_rewind_triangles"));
@@ -112,6 +110,35 @@ public class PerformanceTest extends UiAutomatorTestCase   {
         } catch (UiObjectNotFoundException e) {
             fail("UiObject Not Found" + e.getMessage());
         }
+    }
 
+    @Test
+    public void testVideoPlayTime2(){
+        UiObject firstVideo = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/thumbnail_layout"));
+        UiObject videoFrame = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/player_fragment_container"));
+        UiObject stopButton = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/fast_forward_rewind_triangles"));
+        UiObject currentTime = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/time_bar_current_time"));
+        UiObject skipButton = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/skip_ad_button_container"));
+        UiObject2 loading = mDevice.findObject(By.res("com.google.android.youtube", "com.google.android.youtube:id/player_loading_view_thin"));
+
+        try {
+            firstVideo.click();
+            if (mDevice.hasObject(By.res("com.google.android.youtube", "com.google.android.youtube:id/player_loading_view_thin"))){
+                mDevice.wait(Until.findObject(By.res("com.google.android.youtube", "com.google.android.youtube:id/player_loading_view_thin").enabled(false)),
+                        LAUNCH_TIMEOUT);
+            }
+            if (mDevice.hasObject(By.res("com.google.android.youtube", "com.google.android.youtube:id/skip_ad_button_container")) && skipButton.isEnabled()){
+                skipButton.click();
+            }
+
+            sleep(20000);
+            videoFrame.click();
+            stopButton.click();
+            String[] time = currentTime.getText().split(":");
+            int second = Integer.valueOf(time[1]);
+            Assert.assertTrue("PlayTime",second >= 16 && second <= 24);
+        } catch (UiObjectNotFoundException e) {
+            fail("UiObject Not Found" + e.getMessage());
+        }
     }
 }
