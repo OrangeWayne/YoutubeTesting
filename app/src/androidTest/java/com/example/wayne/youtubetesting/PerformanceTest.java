@@ -96,7 +96,7 @@ public class PerformanceTest extends UiAutomatorTestCase   {
             stopButton.click();
             String[] time = currentTime.getText().split(":");
             int second = Integer.valueOf(time[1]);
-            Assert.assertTrue("PlayTime OK",second > 8 && second < 12);
+            Assert.assertTrue("PlayTime",second > 8 && second < 12);
         } catch (UiObjectNotFoundException e) {
             fail("UiObject Not Found");
         }

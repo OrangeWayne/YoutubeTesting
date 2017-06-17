@@ -28,5 +28,15 @@ interface CallBack{
  * am.CloseMonitor
  */
 
-public class MonitorCallBack {
+public class MonitorCallBack implements CallBack {
+    Context mainContext;
+
+    MonitorCallBack(Context c){
+        mainContext = c;
+    }
+
+    public void notify(long totalMemory, long currentMemory, double cpuUsage) {
+        Log.i("MyApp", "手機總記憶體: " + Formatter.formatFileSize(mainContext, totalMemory) + "\r\n" +  "可用記憶體: " + Formatter.formatFileSize(mainContext, currentMemory)  + "\r\n" +
+                "CPU使用率: " + String.format("%.3f %%", cpuUsage));
+    }
 }
