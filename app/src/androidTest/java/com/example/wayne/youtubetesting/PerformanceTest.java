@@ -98,8 +98,8 @@ public class PerformanceTest extends UiAutomatorTestCase   {
 
         try {
             playVideo.click();
-            if (mDevice.hasObject(By.res("com.google.android.youtube", "com.google.android.youtube:id/player_loading_view_thin"))){
-                mDevice.wait(Until.findObject(By.res("com.google.android.youtube", "com.google.android.youtube:id/player_loading_view_thin").enabled(false)),
+            if (mDevice.hasObject(By.res("com.google.android.youtube", "player_loading_view_thin"))){
+                mDevice.wait(Until.findObject(By.res("com.google.android.youtube", "player_loading_view_thin").enabled(false)),
                         LAUNCH_TIMEOUT);
             }
 
@@ -143,8 +143,8 @@ public class PerformanceTest extends UiAutomatorTestCase   {
         try {
             playVideo.click();
             sleep(1000);
-            if (mDevice.hasObject(By.res("com.google.android.youtube", "com.google.android.youtube:id/player_loading_view_thin"))){
-                mDevice.wait(Until.findObject(By.res("com.google.android.youtube", "com.google.android.youtube:id/player_loading_view_thin").enabled(false)),
+            if (mDevice.hasObject(By.res("com.google.android.youtube", "player_loading_view_thin"))){
+                mDevice.wait(Until.findObject(By.res("com.google.android.youtube", "player_loading_view_thin").enabled(false)),
                         LAUNCH_TIMEOUT);
             }
 
@@ -192,8 +192,8 @@ public class PerformanceTest extends UiAutomatorTestCase   {
 
         try {
             playVideo.click();
-            if (mDevice.hasObject(By.res("com.google.android.youtube", "com.google.android.youtube:id/player_loading_view_thin"))){
-                mDevice.wait(Until.findObject(By.res("com.google.android.youtube", "com.google.android.youtube:id/player_loading_view_thin").enabled(false)),
+            if (mDevice.hasObject(By.res("com.google.android.youtube", "player_loading_view_thin"))){
+                mDevice.wait(Until.findObject(By.res("com.google.android.youtube", "player_loading_view_thin").enabled(false)),
                         LAUNCH_TIMEOUT);
             }
             if (mDevice.hasObject(By.res("com.google.android.youtube", "countdown_text"))){
