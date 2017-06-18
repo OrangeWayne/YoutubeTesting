@@ -3,6 +3,7 @@ package com.example.wayne.youtubetesting;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 
 import java.io.BufferedReader;
@@ -31,7 +32,7 @@ public class AppMonitor {
         new Thread(new Runnable(){
             CallBack callBack = cb;
 
-            Handler mHandler = new Handler(){
+            Handler mHandler = new Handler(Looper.getMainLooper()){
                 int i = 0;
                 @Override
                 public void handleMessage(Message msg) {
