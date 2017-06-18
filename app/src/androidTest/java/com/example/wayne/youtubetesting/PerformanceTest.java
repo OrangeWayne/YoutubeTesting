@@ -64,8 +64,6 @@ public class PerformanceTest extends UiAutomatorTestCase   {
             e.printStackTrace();
         }
 
-        mDevice.pressHome();
-
         // Wait for launcher
         final String launcherPackage = mDevice.getLauncherPackageName();
         assertThat(launcherPackage, notNullValue());
@@ -86,8 +84,10 @@ public class PerformanceTest extends UiAutomatorTestCase   {
     }
 
     @Test
-    public void Step1_testVideoPlayTime1(){
-        UiObject firstVideo = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/thumbnail_layout"));
+    public void testVideoPlayTime1() throws UiObjectNotFoundException{
+        UiObject videoList = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/results"));
+        UiObject secondVideo = videoList.getChild(new UiSelector().index(1));
+        UiObject playVideo = secondVideo.getChild(new UiSelector().resourceId("com.google.android.youtube:id/thumbnail_layout"));
         UiObject videoFrame = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/player_fragment_container"));
         UiObject stopButton = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/fast_forward_rewind_triangles"));
         UiObject currentTime = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/time_bar_current_time"));
@@ -97,12 +97,14 @@ public class PerformanceTest extends UiAutomatorTestCase   {
 
 
         try {
-            firstVideo.click();
+            playVideo.click();
             if (mDevice.hasObject(By.res("com.google.android.youtube", "com.google.android.youtube:id/player_loading_view_thin"))){
                 mDevice.wait(Until.findObject(By.res("com.google.android.youtube", "com.google.android.youtube:id/player_loading_view_thin").enabled(false)),
                         LAUNCH_TIMEOUT);
             }
-            if (mDevice.hasObject(By.res("com.google.android.youtube", "com.google.android.youtube:id/skip_ad_button_container")) && skipButton.isEnabled()){
+
+            if (mDevice.hasObject(By.res("com.google.android.youtube", "countdown_text"))){
+                sleep(7000);
                 skipButton.click();
             }
 
@@ -127,8 +129,10 @@ public class PerformanceTest extends UiAutomatorTestCase   {
     }
 
     @Test
-    public void Step2_testVideoPlayTime2(){
-        UiObject firstVideo = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/thumbnail_layout"));
+    public void testVideoPlayTime2() throws UiObjectNotFoundException{
+        UiObject videoList = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/results"));
+        UiObject secondVideo = videoList.getChild(new UiSelector().index(1));
+        UiObject playVideo = secondVideo.getChild(new UiSelector().resourceId("com.google.android.youtube:id/thumbnail_layout"));
         UiObject videoFrame = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/player_fragment_container"));
         UiObject stopButton = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/fast_forward_rewind_triangles"));
         UiObject currentTime = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/time_bar_current_time"));
@@ -137,12 +141,15 @@ public class PerformanceTest extends UiAutomatorTestCase   {
         UiObject2 loading = mDevice.findObject(By.res("com.google.android.youtube", "com.google.android.youtube:id/player_loading_view_thin"));
 
         try {
-            firstVideo.click();
+            playVideo.click();
+            sleep(1000);
             if (mDevice.hasObject(By.res("com.google.android.youtube", "com.google.android.youtube:id/player_loading_view_thin"))){
                 mDevice.wait(Until.findObject(By.res("com.google.android.youtube", "com.google.android.youtube:id/player_loading_view_thin").enabled(false)),
                         LAUNCH_TIMEOUT);
             }
-            if (mDevice.hasObject(By.res("com.google.android.youtube", "com.google.android.youtube:id/skip_ad_button_container")) && skipButton.isEnabled()){
+
+            if (mDevice.hasObject(By.res("com.google.android.youtube", "countdown_text"))){
+                sleep(7000);
                 skipButton.click();
             }
 
@@ -167,8 +174,10 @@ public class PerformanceTest extends UiAutomatorTestCase   {
     }
 
     @Test
-    public void Step3_testCPUAndMemory(){
-        UiObject firstVideo = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/thumbnail_layout"));
+    public void Step3_testCPUAndMemory() throws UiObjectNotFoundException{
+        UiObject videoList = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/results"));
+        UiObject secondVideo = videoList.getChild(new UiSelector().index(1));
+        UiObject playVideo = secondVideo.getChild(new UiSelector().resourceId("com.google.android.youtube:id/thumbnail_layout"));
         UiObject videoFrame = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/player_fragment_container"));
         UiObject stopButton = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/fast_forward_rewind_triangles"));
         UiObject currentTime = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/time_bar_current_time"));
@@ -182,12 +191,13 @@ public class PerformanceTest extends UiAutomatorTestCase   {
         am.StartMonitor(cb);
 
         try {
-            firstVideo.click();
+            playVideo.click();
             if (mDevice.hasObject(By.res("com.google.android.youtube", "com.google.android.youtube:id/player_loading_view_thin"))){
                 mDevice.wait(Until.findObject(By.res("com.google.android.youtube", "com.google.android.youtube:id/player_loading_view_thin").enabled(false)),
                         LAUNCH_TIMEOUT);
             }
-            if (mDevice.hasObject(By.res("com.google.android.youtube", "com.google.android.youtube:id/skip_ad_button_container")) && skipButton.isEnabled()){
+            if (mDevice.hasObject(By.res("com.google.android.youtube", "countdown_text"))){
+                sleep(7000);
                 skipButton.click();
             }
 
