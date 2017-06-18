@@ -93,7 +93,36 @@ public class CombinationTest extends UiAutomatorTestCase   {
         UiObject loginListViewItem = loginListView.getChild(new UiSelector().index(1));
         UiObject loginListViewItemChild = loginListViewItem.getChild(new UiSelector().index(0));
         UiObject loginAccount = loginListViewItemChild.getChild(new UiSelector().index(0));
-        loginAccount.click();
+        if (mDevice.hasObject(By.text("新增帳戶"))){
+            UiObject addAccount = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/add_account"));
+            addAccount.click();
+            sleep(2000);
+
+            UiObject email = new UiObject(new UiSelector().resourceId("identifierId"));
+            email.setText("sttest12332123");
+            UiObject nextButton = new UiObject(new UiSelector().resourceId("identifierNext"));
+            nextButton.click();
+            sleep(1000);
+
+            UiObject frameLayout = new UiObject(new UiSelector().resourceId("com.google.android.gms:id/minute_maid"));
+            UiObject webView = frameLayout.getChild(new UiSelector().index(0));
+            UiObject webViewChild = webView.getChild(new UiSelector().index(0));
+            UiObject view = webViewChild.getChild(new UiSelector().index(2));
+            UiObject password = view.getChild(new UiSelector().index(0));
+            password.setText("qazxswpl3159");
+            nextButton = new UiObject(new UiSelector().resourceId("passwordNext"));
+            nextButton.click();
+
+            UiObject signinconsentNextButton = new UiObject(new UiSelector().resourceId("signinconsentNext"));
+            signinconsentNextButton.click();
+            sleep(2000);
+            UiObject continueBotton = new UiObject(new UiSelector().resourceId("com.google.android.gms:id/google_services_next_button_item"));
+            continueBotton.click();
+        }
+        else {
+            loginAccount.click();
+        }
+
     }
 
     @Test //切換至發燒影片 5
