@@ -87,7 +87,7 @@ public class PerformanceTest extends UiAutomatorTestCase   {
     }
 
     @Test
-    public void testVideoPlayTime1(){
+    public void Step1_testVideoPlayTime1(){
         UiObject firstVideo = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/thumbnail_layout"));
         UiObject videoFrame = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/player_fragment_container"));
         UiObject stopButton = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/fast_forward_rewind_triangles"));
@@ -128,7 +128,7 @@ public class PerformanceTest extends UiAutomatorTestCase   {
     }
 
     @Test
-    public void testVideoPlayTime2(){
+    public void Step2_testVideoPlayTime2(){
         UiObject firstVideo = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/thumbnail_layout"));
         UiObject videoFrame = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/player_fragment_container"));
         UiObject stopButton = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/fast_forward_rewind_triangles"));
@@ -168,7 +168,7 @@ public class PerformanceTest extends UiAutomatorTestCase   {
     }
 
     @Test
-    public void testCPUAndMemory(){
+    public void Step3_testCPUAndMemory(){
         UiObject firstVideo = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/thumbnail_layout"));
         UiObject videoFrame = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/player_fragment_container"));
         UiObject stopButton = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/fast_forward_rewind_triangles"));
