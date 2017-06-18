@@ -93,7 +93,7 @@ public class CombinationTest extends UiAutomatorTestCase   {
         UiObject loginListViewItem = loginListView.getChild(new UiSelector().index(1));
         UiObject loginListViewItemChild = loginListViewItem.getChild(new UiSelector().index(0));
         UiObject loginAccount = loginListViewItemChild.getChild(new UiSelector().index(0));
-        if (mDevice.hasObject(By.text("新增帳戶"))){
+        if (mDevice.hasObject(By.text("新增帳戶")) || mDevice.hasObject(By.text("Add account"))){
             UiObject addAccount = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/add_account"));
             addAccount.click();
             sleep(2000);
