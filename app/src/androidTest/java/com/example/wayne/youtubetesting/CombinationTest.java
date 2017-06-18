@@ -42,16 +42,18 @@ public class CombinationTest extends UiAutomatorTestCase   {
     public void startYoutubeMainActivityFromHomeScreen() throws UiObjectNotFoundException {
         // Initialize UiDevice instance
         mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
+        mDevice.pressHome();
 
         try {
             if(mDevice.pressRecentApps()) {
                 sleep(1000);
-                int height = mDevice.getDisplayHeight();
-                int width = mDevice.getDisplayWidth();
-                mDevice.swipe(width/2,height/2, width*2, height/2, 10);
+                UiObject dismissButton = new UiObject(new UiSelector().descriptionContains("Dismiss YouTube."));
+                dismissButton.click();
             }
+        } catch (UiObjectNotFoundException e) {
+            e.printStackTrace();
         } catch (RemoteException e) {
-
+            e.printStackTrace();
         }
 
         // Start from the home screen

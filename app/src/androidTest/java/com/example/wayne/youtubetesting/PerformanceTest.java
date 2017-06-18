@@ -57,15 +57,14 @@ public class PerformanceTest extends UiAutomatorTestCase   {
                 sleep(1000);
                 UiObject dismissButton = new UiObject(new UiSelector().descriptionContains("Dismiss YouTube."));
                 dismissButton.click();
-//                int height = mDevice.getDisplayHeight();
-//                int width = mDevice.getDisplayWidth();
-//                mDevice.swipe(width/2,height/2, width*2, height/2, 10);
             }
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+
+        mDevice.pressHome();
 
         // Wait for launcher
         final String launcherPackage = mDevice.getLauncherPackageName();
