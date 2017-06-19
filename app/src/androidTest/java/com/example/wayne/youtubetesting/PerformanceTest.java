@@ -24,8 +24,10 @@ import android.util.Log;
 
 import junit.framework.Assert;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.*;
@@ -38,6 +40,7 @@ import com.example.wayne.youtubetesting.MonitorCallBack;
  */
 
 @RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class PerformanceTest extends UiAutomatorTestCase   {
     private static final String BASIC_SAMPLE_PACKAGE
             = "com.google.android.youtube";
@@ -84,7 +87,7 @@ public class PerformanceTest extends UiAutomatorTestCase   {
     }
 
     @Test
-    public void testVideoPlayTime1() throws UiObjectNotFoundException{
+    public void Step1_testVideoPlayTime1() throws UiObjectNotFoundException{
         UiObject videoList = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/results"));
         UiObject secondVideo = videoList.getChild(new UiSelector().index(1));
         UiObject playVideo = secondVideo.getChild(new UiSelector().resourceId("com.google.android.youtube:id/thumbnail_layout"));
@@ -123,7 +126,7 @@ public class PerformanceTest extends UiAutomatorTestCase   {
     }
 
     @Test
-    public void testVideoPlayTime2() throws UiObjectNotFoundException{
+    public void Step2_testVideoPlayTime2() throws UiObjectNotFoundException{
         UiObject videoList = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/results"));
         UiObject secondVideo = videoList.getChild(new UiSelector().index(1));
         UiObject playVideo = secondVideo.getChild(new UiSelector().resourceId("com.google.android.youtube:id/thumbnail_layout"));
@@ -163,7 +166,7 @@ public class PerformanceTest extends UiAutomatorTestCase   {
     }
 
     @Test
-    public void testCPUAndMemory() throws UiObjectNotFoundException{
+    public void Step3_testCPUAndMemory() throws UiObjectNotFoundException{
         UiObject videoList = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/results"));
         UiObject secondVideo = videoList.getChild(new UiSelector().index(1));
         UiObject playVideo = secondVideo.getChild(new UiSelector().resourceId("com.google.android.youtube:id/thumbnail_layout"));
