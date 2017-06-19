@@ -115,7 +115,7 @@ public class PerformanceTest extends UiAutomatorTestCase   {
             int totalSecond = Integer.valueOf(total[1]);
 
             if (totalSecond >= 8 ){
-                Assert.assertTrue("PlayTime",second >= 8 && second <= 12);
+                Assert.assertTrue("PlayTime",second >= 6 && second <= 14);
             }else {
                 Assert.assertTrue(true);
             }
@@ -155,7 +155,7 @@ public class PerformanceTest extends UiAutomatorTestCase   {
             int totalSecond = Integer.valueOf(total[1]);
 
             if (totalSecond >= 16 ){
-                Assert.assertTrue("PlayTime",second >= 16 && second <= 24);
+                Assert.assertTrue("PlayTime",second >= 14 && second <= 26);
             }else {
                 Assert.assertTrue(true);
             }
