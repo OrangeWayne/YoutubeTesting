@@ -38,7 +38,7 @@ import org.junit.FixMethodOrder;
  */
 @RunWith(AndroidJUnit4.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class Testcase {
+public class CombinationTest3 {
 
     private static final String BASIC_SAMPLE_PACKAGE
             = "com.google.android.youtube";
@@ -58,12 +58,7 @@ public class Testcase {
             if(mDevice.pressRecentApps()) {
                 Thread.sleep(1000);
                 UiObject dismissButtonEN = new UiObject(new UiSelector().descriptionContains("Dismiss YouTube."));
-                UiObject dismissButtonCN = new UiObject(new UiSelector().descriptionContains("關閉「YouTube」。"));
-                if(dismissButtonEN.exists()){
-                    dismissButtonEN.click();
-                }else if(dismissButtonCN.exists()){
-                    dismissButtonCN.click();
-                }
+                dismissButtonEN.click();
             }
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
@@ -114,13 +109,8 @@ public class Testcase {
         loginAccount.click();
 
         // Check user is the same as expected account
-        UiObject accountTabEN = new UiObject(new UiSelector().descriptionContains("Account"));
-        UiObject accountTabCN = new UiObject(new UiSelector().descriptionContains("帳號"));
-        if(accountTabEN.exists()){
-            accountTabEN.click();
-        }else{
-            accountTabCN.click();
-        }
+        UiObject accountTab = new UiObject(new UiSelector().descriptionContains("Account"));
+        accountTab.click();
 
         UiObject accountName = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/account_name"));
         assertEquals("軟測", accountName.getText());
@@ -164,7 +154,7 @@ public class Testcase {
         movieTitle.setText("test video title");
 
         // Upload video
-        UiObject uploadButton = new UiObject(new UiSelector().descriptionMatches("Upload"));
+        UiObject uploadButton = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/menu_upload_activity_done"));
         uploadButton.click();
 
         Thread.sleep(20000);
@@ -208,13 +198,9 @@ public class Testcase {
     public void Step5_Logout() throws UiObjectNotFoundException, InterruptedException, RemoteException {
 
         Log.d("YoutubeTest","Logout");
-        // initialize component
-        UiObject toolbar = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/toolbar"));
-        UiObject toolbarItem = toolbar.getChild(new UiSelector().index(1));
-        UiObject moreOption = toolbarItem.getChild((new UiSelector().index(1)));
-        moreOption.click();
-
         Thread.sleep(1000);
+        // initialize component
+        UiObject moreOption = new UiObject(new UiSelector().descriptionMatches("More options"));
         moreOption.click();
 
         UiObject listView = new UiObject(new UiSelector().className("android.widget.ListView"));
