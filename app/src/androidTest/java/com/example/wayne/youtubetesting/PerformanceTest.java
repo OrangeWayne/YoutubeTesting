@@ -24,8 +24,10 @@ import android.util.Log;
 
 import junit.framework.Assert;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.*;
@@ -38,6 +40,7 @@ import com.example.wayne.youtubetesting.MonitorCallBack;
  */
 
 @RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class PerformanceTest extends UiAutomatorTestCase   {
     private static final String BASIC_SAMPLE_PACKAGE
             = "com.google.android.youtube";
@@ -84,7 +87,7 @@ public class PerformanceTest extends UiAutomatorTestCase   {
     }
 
     @Test
-    public void testVideoPlayTime1() throws UiObjectNotFoundException{
+    public void Step1_testVideoPlayTime1() throws UiObjectNotFoundException{
         UiObject videoList = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/results"));
         UiObject secondVideo = videoList.getChild(new UiSelector().index(1));
         UiObject playVideo = secondVideo.getChild(new UiSelector().resourceId("com.google.android.youtube:id/thumbnail_layout"));
@@ -92,19 +95,13 @@ public class PerformanceTest extends UiAutomatorTestCase   {
         UiObject stopButton = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/fast_forward_rewind_triangles"));
         UiObject currentTime = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/time_bar_current_time"));
         UiObject totalTime = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/time_bar_total_time"));
-        UiObject skipButton = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/skip_ad_button_container"));
-        UiObject2 loading = mDevice.findObject(By.res("com.google.android.youtube", "com.google.android.youtube:id/player_loading_view_thin"));
-
 
         try {
             playVideo.click();
-            if (mDevice.hasObject(By.res("com.google.android.youtube", "player_loading_view_thin"))){
-                mDevice.wait(Until.findObject(By.res("com.google.android.youtube", "player_loading_view_thin").enabled(false)),
-                        LAUNCH_TIMEOUT);
-            }
-
-            if (mDevice.hasObject(By.res("com.google.android.youtube", "countdown_text"))){
+            sleep(1000);
+            if (mDevice.hasObject(By.textContains("略過廣告")) || mDevice.hasObject(By.textContains("skip"))){
                 sleep(7000);
+                UiObject skipButton = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/skip_ad_button_container"));
                 skipButton.click();
             }
 
@@ -118,7 +115,7 @@ public class PerformanceTest extends UiAutomatorTestCase   {
             int totalSecond = Integer.valueOf(total[1]);
 
             if (totalSecond >= 8 ){
-                Assert.assertTrue("PlayTime",second >= 8 && second <= 12);
+                Assert.assertTrue("PlayTime",second >= 6 && second <= 14);
             }else {
                 Assert.assertTrue(true);
             }
@@ -129,7 +126,7 @@ public class PerformanceTest extends UiAutomatorTestCase   {
     }
 
     @Test
-    public void testVideoPlayTime2() throws UiObjectNotFoundException{
+    public void Step2_testVideoPlayTime2() throws UiObjectNotFoundException{
         UiObject videoList = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/results"));
         UiObject secondVideo = videoList.getChild(new UiSelector().index(1));
         UiObject playVideo = secondVideo.getChild(new UiSelector().resourceId("com.google.android.youtube:id/thumbnail_layout"));
@@ -137,19 +134,14 @@ public class PerformanceTest extends UiAutomatorTestCase   {
         UiObject stopButton = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/fast_forward_rewind_triangles"));
         UiObject currentTime = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/time_bar_current_time"));
         UiObject totalTime = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/time_bar_total_time"));
-        UiObject skipButton = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/skip_ad_button_container"));
-        UiObject2 loading = mDevice.findObject(By.res("com.google.android.youtube", "com.google.android.youtube:id/player_loading_view_thin"));
+
 
         try {
             playVideo.click();
             sleep(1000);
-            if (mDevice.hasObject(By.res("com.google.android.youtube", "player_loading_view_thin"))){
-                mDevice.wait(Until.findObject(By.res("com.google.android.youtube", "player_loading_view_thin").enabled(false)),
-                        LAUNCH_TIMEOUT);
-            }
-
-            if (mDevice.hasObject(By.res("com.google.android.youtube", "countdown_text"))){
+            if (mDevice.hasObject(By.textContains("略過廣告")) || mDevice.hasObject(By.textContains("skip"))){
                 sleep(7000);
+                UiObject skipButton = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/skip_ad_button_container"));
                 skipButton.click();
             }
 
@@ -163,7 +155,7 @@ public class PerformanceTest extends UiAutomatorTestCase   {
             int totalSecond = Integer.valueOf(total[1]);
 
             if (totalSecond >= 16 ){
-                Assert.assertTrue("PlayTime",second >= 16 && second <= 20);
+                Assert.assertTrue("PlayTime",second >= 14 && second <= 26);
             }else {
                 Assert.assertTrue(true);
             }
@@ -180,10 +172,6 @@ public class PerformanceTest extends UiAutomatorTestCase   {
         UiObject playVideo = secondVideo.getChild(new UiSelector().resourceId("com.google.android.youtube:id/thumbnail_layout"));
         UiObject videoFrame = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/player_fragment_container"));
         UiObject stopButton = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/fast_forward_rewind_triangles"));
-        UiObject currentTime = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/time_bar_current_time"));
-        UiObject totalTime = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/time_bar_total_time"));
-        UiObject skipButton = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/skip_ad_button_container"));
-        UiObject2 loading = mDevice.findObject(By.res("com.google.android.youtube", "com.google.android.youtube:id/player_loading_view_thin"));
 
         Context context = InstrumentationRegistry.getContext();
         CallBack cb = new MonitorCallBack(context);
@@ -192,12 +180,10 @@ public class PerformanceTest extends UiAutomatorTestCase   {
 
         try {
             playVideo.click();
-            if (mDevice.hasObject(By.res("com.google.android.youtube", "player_loading_view_thin"))){
-                mDevice.wait(Until.findObject(By.res("com.google.android.youtube", "player_loading_view_thin").enabled(false)),
-                        LAUNCH_TIMEOUT);
-            }
-            if (mDevice.hasObject(By.res("com.google.android.youtube", "countdown_text"))){
+            sleep(1000);
+            if (mDevice.hasObject(By.textContains("略過廣告")) || mDevice.hasObject(By.textContains("skip"))){
                 sleep(7000);
+                UiObject skipButton = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/skip_ad_button_container"));
                 skipButton.click();
             }
 

@@ -22,8 +22,10 @@ import android.support.test.runner.AndroidJUnit4;
 
 import junit.framework.Assert;
 
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.*;
@@ -32,6 +34,7 @@ import static org.junit.Assert.*;
  */
 
 @RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class CombinationTest extends UiAutomatorTestCase   {
     private static final String BASIC_SAMPLE_PACKAGE
             = "com.google.android.youtube";
@@ -93,7 +96,8 @@ public class CombinationTest extends UiAutomatorTestCase   {
         UiObject loginListViewItem = loginListView.getChild(new UiSelector().index(1));
         UiObject loginListViewItemChild = loginListViewItem.getChild(new UiSelector().index(0));
         UiObject loginAccount = loginListViewItemChild.getChild(new UiSelector().index(0));
-        if (mDevice.hasObject(By.text("新增帳戶"))){
+        /*if (mDevice.hasObject(By.text("新增帳戶"))){
+        //if(mDevice.hasObject(By.textContains("sttest"))){
             UiObject addAccount = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/add_account"));
             addAccount.click();
             sleep(2000);
@@ -116,50 +120,61 @@ public class CombinationTest extends UiAutomatorTestCase   {
             UiObject signinconsentNextButton = new UiObject(new UiSelector().resourceId("signinconsentNext"));
             signinconsentNextButton.click();
             sleep(2000);
-            UiObject continueBotton = new UiObject(new UiSelector().resourceId("com.google.android.gms:id/google_services_next_button_item"));
-            continueBotton.click();
+            UiObject continueButton = new UiObject(new UiSelector().resourceId("com.google.android.gms:id/google_services_next_button_item"));
+            continueButton.click();
         }
         else {
-            loginAccount.click();
-        }
 
+        }
+*/
+        loginAccount.click();
     }
 
     @Test //切換至發燒影片 5
-    public void SwitchTab_hotVideo() throws UiObjectNotFoundException {
+    public void Step1_SwitchTab_hotVideo() throws UiObjectNotFoundException {
         UiObject tabBar = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/tabs_bar"));
         UiObject tabBarLayout = tabBar.getChild(new UiSelector().index(0));
         UiObject hotVideo = tabBarLayout.getChild(new UiSelector().index(1));
         hotVideo.click();
+        UiObject index = tabBarLayout.getChild(new UiSelector().index(0));
+        index.click();
     }
 
     @Test //切換至訂閱內容 1
-    public void SwitchTab_subscription() throws UiObjectNotFoundException {
+    public void Step2_SwitchTab_subscription() throws UiObjectNotFoundException {
         UiObject tabBar = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/tabs_bar"));
         UiObject tabBarLayout = tabBar.getChild(new UiSelector().index(0));
         UiObject subscription = tabBarLayout.getChild(new UiSelector().index(2));
         subscription.click();
+        UiObject index = tabBarLayout.getChild(new UiSelector().index(0));
+        index.click();
     }
 
     @Test //切換至帳戶 4
-    public void SwitchTab_account() throws UiObjectNotFoundException {
+    public void Step3_SwitchTab_account() throws UiObjectNotFoundException {
         UiObject tabBar = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/tabs_bar"));
         UiObject tabBarLayout = tabBar.getChild(new UiSelector().index(0));
         UiObject account = tabBarLayout.getChild(new UiSelector().index(3));
         account.click();
+        UiObject index = tabBarLayout.getChild(new UiSelector().index(0));
+        index.click();
     }
 
     @Test //訂閱 2
-    public void SubscriptAndUnSubscript() throws UiObjectNotFoundException {
+    public void Step4_SubscriptAndUnSubscript() throws UiObjectNotFoundException {
         //取得主頁第二個影片的上傳者 ((第一個影片通常都是廣告
         UiObject mainPage = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/results"));
-        mainPage.swipeUp(10); //往下滑 直到第二個影片上傳者出現
+        mainPage.swipeUp(20); //往下滑 直到第二個影片上傳者出現
         UiObject frameLayout = mainPage.getChild(new UiSelector().index(1));//取得訂閱目標位置
         UiObject linearLayout = frameLayout.getChild(new UiSelector().index(0));
         UiObject relativeLayout = linearLayout.getChild(new UiSelector().index(1));
         //取得訂閱目標
         UiObject subscriptTarget = relativeLayout.getChild(new UiSelector().index(0));
         subscriptTarget.click();
+        //取得訂閱頻道名稱
+        UiObject subscriptAccountNameObject = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/channel_title"));
+        String subscriptAccountNameString = subscriptAccountNameObject.getText();
+        //System.console().printf(subscriptAccountNameString);
         //取得訂閱按鈕
         UiObject subscriptButton = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/subscribe_button"));
         subscriptButton.click(); //點選訂閱
@@ -179,6 +194,10 @@ public class CombinationTest extends UiAutomatorTestCase   {
         UiObject kidLinearLayout = horizontalScrollView.getChild(new UiSelector().index(0));
         UiObject indexTab = kidLinearLayout.getChild(new UiSelector().index(0));
         indexTab.click(); //點擊至主頁
+        //取得取消訂閱頻道名稱
+        UiObject unSubscriptAccountNameObject = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/channel_title"));
+        String unSubscriptAccountNameString = subscriptAccountNameObject.getText();
+        Assert.assertEquals(unSubscriptAccountNameString,subscriptAccountNameString); //比對是否相同
         //取得訂閱按鈕位置
         subscriptButton = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/subscribe_button"));
         subscriptButton.click(); //點選取消訂閱
@@ -188,16 +207,19 @@ public class CombinationTest extends UiAutomatorTestCase   {
     }
 
     @Test //選取影片加入稍後觀看
-    public void AddInWatchLater() throws UiObjectNotFoundException {
+    public void Step5_AddInWatchLater() throws UiObjectNotFoundException {
         //取得主頁第二個影片 ((第一個影片通常都是廣告
         UiObject mainPage = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/results"));
-        mainPage.swipeUp(10); //往下滑 直到第二個影片出現
+        mainPage.swipeUp(20); //往下滑 直到第二個影片出現
         UiObject frameLayout = mainPage.getChild(new UiSelector().index(1));//取得目標位置
         UiObject linearLayout = frameLayout.getChild(new UiSelector().index(0));
         UiObject relativeLayout = linearLayout.getChild(new UiSelector().index(0));
         //取得目標影片選項
         UiObject moiveTarget = relativeLayout.getChild(new UiSelector().index(0));
         moiveTarget.click(); //點選影片
+        //取得影片名稱
+        UiObject videoTitleObject = new UiObject((new UiSelector().resourceId("com.google.android.youtube:id/title")));
+        String videoTitleName = videoTitleObject.getText();
         UiObject viewGroup = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/buttons_container"));
         UiObject viewGroupItem = viewGroup.getChild(new UiSelector().index(3));
         UiObject addIntoButton = viewGroupItem.getChild(new UiSelector().index(0));
@@ -208,7 +230,7 @@ public class CombinationTest extends UiAutomatorTestCase   {
         UiObject addWatchLaterButton = watchLater.getChild(new UiSelector().index(1));
         addWatchLaterButton.click();
         mDevice.pressBack();
-        mainPage.swipeDown(10); //往上滑 直到TabBar出現
+        mainPage.swipeDown(30); //往上滑 直到TabBar出現
 
         //切換至帳戶
         UiObject tabBar = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/tabs_bar"));
@@ -219,6 +241,10 @@ public class CombinationTest extends UiAutomatorTestCase   {
         linearLayout = mainPage.getChild(new UiSelector().index(4));
         UiObject watchLaterList = linearLayout.getChild(new UiSelector().index(1));
         watchLaterList.click();
+        //取得影片名稱
+        UiObject watchLaterVideoTitleObject = new UiObject((new UiSelector().resourceId("com.google.android.youtube:id/title")));
+        String watchLaterVideoTitleName = videoTitleObject.getText();
+        Assert.assertEquals(videoTitleName,watchLaterVideoTitleName);
         UiObject option = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/contextual_menu_anchor"));
         option.click();
         UiObject listView = new UiObject(new UiSelector().className("android.widget.ListView"));
