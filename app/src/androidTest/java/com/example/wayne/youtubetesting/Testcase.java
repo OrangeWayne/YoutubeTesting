@@ -6,12 +6,16 @@ import org.junit.Before;
 import android.content.Intent;
 import android.os.RemoteException;
 import android.support.test.runner.AndroidJUnit4;
+import android.support.test.uiautomator.BySelector;
+import android.support.test.uiautomator.EventCondition;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.UiObject;
+import android.support.test.uiautomator.UiObject2;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
 import android.support.test.uiautomator.Until;
+import android.support.test.uiautomator.UiAutomatorTestCase;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -53,8 +57,13 @@ public class Testcase {
         try {
             if(mDevice.pressRecentApps()) {
                 Thread.sleep(1000);
-                UiObject dismissButton = new UiObject(new UiSelector().descriptionContains("Dismiss YouTube."));
-                dismissButton.click();
+                UiObject dismissButtonEN = new UiObject(new UiSelector().descriptionContains("Dismiss YouTube."));
+                UiObject dismissButtonCN = new UiObject(new UiSelector().descriptionContains("關閉「YouTube」。"));
+                if(dismissButtonEN.exists()){
+                    dismissButtonEN.click();
+                }else if(dismissButtonCN.exists()){
+                    dismissButtonCN.click();
+                }
             }
         } catch (UiObjectNotFoundException e) {
             e.printStackTrace();
@@ -85,7 +94,10 @@ public class Testcase {
     public void Step2_Login() throws UiObjectNotFoundException, InterruptedException {
 
         Log.d("YoutubeTest","Login");
-        UiObject moreOption = new UiObject(new UiSelector().descriptionMatches("More options"));
+
+        UiObject toolbar = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/toolbar"));
+        UiObject toolbarItem = toolbar.getChild(new UiSelector().index(1));
+        UiObject moreOption = toolbarItem.getChild((new UiSelector().index(1)));
         moreOption.click();
 
         UiObject listView = new UiObject(new UiSelector().className("android.widget.ListView"));
@@ -99,49 +111,16 @@ public class Testcase {
         UiObject loginListViewItemChild = loginListViewItem.getChild(new UiSelector().index(0));
         UiObject loginAccount = loginListViewItemChild.getChild(new UiSelector().index(0));
 
-        try{
-
-            if (mDevice.hasObject(By.text("新增帳戶")) || (mDevice.hasObject(By.text("Add account")))){
-                UiObject addAccount = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/add_account"));
-                addAccount.click();
-                sleep(5000);
-                Log.d("YoutubeTest","addaccount");
-                UiObject account = new UiObject(new UiSelector().resourceId("identifierId"));
-                account.click();
-                account.setText("sttest12332123");
-
-                UiObject nextButton = new UiObject(new UiSelector().resourceId("identifierNext"));
-                nextButton.click();
-                sleep(1000);
-
-                UiObject frameLayout = new UiObject(new UiSelector().resourceId("com.google.android.gms:id/minute_maid"));
-                UiObject webView = frameLayout.getChild(new UiSelector().index(0));
-                UiObject webViewChild = webView.getChild(new UiSelector().index(0));
-                UiObject view = webViewChild.getChild(new UiSelector().index(2));
-                UiObject password = view.getChild(new UiSelector().index(0));
-                password.setText("qazxswpl3159");
-                nextButton = new UiObject(new UiSelector().resourceId("passwordNext"));
-                nextButton.click();
-
-                UiObject signinconsentNextButton = new UiObject(new UiSelector().resourceId("signinconsentNext"));
-                signinconsentNextButton.click();
-                sleep(2000);
-                UiObject continueBotton = new UiObject(new UiSelector().resourceId("com.google.android.gms:id/google_services_next_button_item"));
-                continueBotton.click();
-            }
-            else {
-                loginAccount.click();
-            }
-
-        }catch (Exception e){
-
-        }
-
-
+        loginAccount.click();
 
         // Check user is the same as expected account
-        UiObject accountTab = new UiObject(new UiSelector().descriptionContains("Account"));
-        accountTab.click();
+        UiObject accountTabEN = new UiObject(new UiSelector().descriptionContains("Account"));
+        UiObject accountTabCN = new UiObject(new UiSelector().descriptionContains("帳號"));
+        if(accountTabEN.exists()){
+            accountTabEN.click();
+        }else{
+            accountTabCN.click();
+        }
 
         UiObject accountName = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/account_name"));
         assertEquals("軟測", accountName.getText());
@@ -230,7 +209,10 @@ public class Testcase {
 
         Log.d("YoutubeTest","Logout");
         // initialize component
-        UiObject moreOption = new UiObject(new UiSelector().descriptionMatches("More options"));
+        UiObject toolbar = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/toolbar"));
+        UiObject toolbarItem = toolbar.getChild(new UiSelector().index(1));
+        UiObject moreOption = toolbarItem.getChild((new UiSelector().index(1)));
+        moreOption.click();
 
         Thread.sleep(1000);
         moreOption.click();
