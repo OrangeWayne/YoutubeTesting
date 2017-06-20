@@ -210,7 +210,7 @@ public class CombinationTest extends UiAutomatorTestCase   {
     public void Step5_AddInWatchLater() throws UiObjectNotFoundException {
         //取得主頁第二個影片 ((第一個影片通常都是廣告
         UiObject mainPage = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/results"));
-        mainPage.swipeUp(20); //往下滑 直到第二個影片出現
+        mainPage.swipeUp(30); //往下滑 直到第二個影片出現
         UiObject frameLayout = mainPage.getChild(new UiSelector().index(1));//取得目標位置
         UiObject linearLayout = frameLayout.getChild(new UiSelector().index(0));
         UiObject relativeLayout = linearLayout.getChild(new UiSelector().index(0));
@@ -230,12 +230,15 @@ public class CombinationTest extends UiAutomatorTestCase   {
         UiObject addWatchLaterButton = watchLater.getChild(new UiSelector().index(1));
         addWatchLaterButton.click();
         mDevice.pressBack();
-        mainPage.swipeDown(30); //往上滑 直到TabBar出現
+       // mainPage.swipeDown(30); //往上滑 直到TabBar出現
+        //sleep(2000);
 
         //切換至帳戶
         UiObject tabBar = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/tabs_bar"));
         UiObject tabBarLayout = tabBar.getChild(new UiSelector().index(0));
         UiObject account = tabBarLayout.getChild(new UiSelector().index(3));
+        //UiObject hot = tabBarLayout.getChild(new UiSelector().index(1));
+        //hot.click();
         account.click();
         mainPage = new UiObject(new UiSelector().resourceId("com.google.android.youtube:id/results"));
         linearLayout = mainPage.getChild(new UiSelector().index(4));
